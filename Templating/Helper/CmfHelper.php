@@ -16,6 +16,7 @@ use PHPCR\Util\PathHelper;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ODM\PHPCR\Exception\MissingTranslationException;
 use Doctrine\ODM\PHPCR\DocumentManager;
+use Symfony\Component\Debug\Debug;
 use Symfony\Component\Templating\Helper\Helper;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
@@ -509,7 +510,7 @@ class CmfHelper extends Helper
             $parent = $parent->getParent();
             $childNames = $parent->getNodeNames()->getArrayCopy();
             $key = array_search(PathHelper::getNodeName($parentPath), $childNames);
-            $childNames = array_slice($childNames, 0, $key + 1);
+            $childNames = array_slice($childNames, 0, $key);
             $childNames = array_reverse($childNames);
             $result = $this->checkChildren($childNames, $parent->getPath(), $ignoreRole, $class);
             if ($result) {
@@ -642,7 +643,7 @@ class CmfHelper extends Helper
     public function getPrev($current, $anchor = null, $depth = null, $ignoreRole = false, $class = null)
     {
         if ($anchor) {
-            return $this->searchDepthPrev($current, $anchor, $depth, true, $ignoreRole, $class);
+            return $this->searchDepthPrev($current, $anchor, $depth, $ignoreRole, $class);
         }
 
         return $this->search($current, true, $ignoreRole, $class);
