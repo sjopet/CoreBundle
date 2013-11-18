@@ -55,10 +55,11 @@ class TranslatableExtension extends AdminExtension
     {
         $formMapper
             ->with('form.group_general')
-            ->add('locale', 'choice', array(
+            ->add('locale', 'cmf_locale_switcher', array(
                 'translation_domain' => 'CmfCoreBundle',
                 'choices' => array_combine($this->locales, $this->locales),
                 'empty_value' => '',
+                'template' => 'CmfCoreBundle:Form:sonata_admin.view.edit.locales.switcher.html.twig', //sonata_admin.view.edit.locales.switcher.html.twig
             ))
             ->end()
         ;
